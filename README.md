@@ -2,7 +2,7 @@
 
 ## About the Project
 
-**Budget Planner** is a command-line application written in Python that helps users plan their personal finances. Users record their recurring expenses and, optionally, their income. The app then shows a monthly and yearly overview of where the money goes.
+**Budget Planner** is a command-line application written in Python that helps users plan their personal finances. Users record their recurring expenses and, optionally, their income. The app then shows a clear monthly overview of where the money goes.
 
 The project was developed as part of the *Programming Foundations* module in the BSc Business Information Technology programme at FHNW.
 
@@ -31,7 +31,7 @@ Spreadsheets can solve this, but they require setting up formulas and structure 
 Lena is 21 and about to move into her first apartment in Basel. In September she starts a part-time degree and plans to work 60% alongside her studies. Before she signs the rental contract, she wants to know whether her budget will work.
 
 1. Lena starts Budget Planner and adds her expected costs one after another: rent, utilities, health insurance, groceries and a public transport pass. She enters the Serafe fee and her household insurance as **yearly** items.
-2. She opens the **overview** and sees all costs grouped by category, each shown per month and per year. Housing makes up almost two thirds of her expenses.
+2. She opens the **overview** and sees all costs grouped by category, with yearly bills converted to monthly amounts. Housing makes up almost two thirds of her expenses.
 3. She adds her income by entering her full-time salary and her **workload of 60%**. The app shows her remaining budget: it is negative, and a warning appears.
 4. Lena changes her workload to 70%. Now the remaining budget is positive, with a small reserve.
 5. She **exports the report** as a text file to discuss it with her parents before signing the contract.
@@ -52,8 +52,8 @@ Budget Planner is a single-user application without login. We distinguish two ro
 
 ## User Benefits
 
-- **One place for all fixed costs:** Expenses are grouped by category, with subtotals and each category's share of the total.
-- **No forgotten yearly bills:** Every amount is shown per month and per year, so yearly costs are part of the budget from the start.
+- **One place for all fixed costs:** Expenses are grouped by category, with a subtotal per category and a total.
+- **No forgotten yearly bills:** Yearly costs are converted to monthly amounts, so they are part of the budget from the start.
 - **Income is optional:** The app is useful with expenses alone. Once income is added, it shows the remaining budget and warns if it is negative.
 - **Flexible income entry:** Income can be entered as a monthly salary, from a workload percentage or from an hourly wage.
 - **Easy to share:** The overview can be exported as a text file and shared with people who don't use the app.
@@ -66,7 +66,7 @@ Budget Planner is a single-user application without login. We distinguish two ro
 | Requirement | How Budget Planner meets it | Where |
 | --- | --- | --- |
 | **Console interaction** | The app runs in the terminal with a numbered main menu. All data is entered with `input()`; all results are shown with `print()`. | All stories, S2 |
-| **Input validation** | Every input is checked for type, range and format (e.g. positive amounts, workload 1–100, weekly hours 1–60, `m`/`y` interval, valid item numbers, `y`/`n` confirmations). Invalid input shows an error message and asks again; the program never crashes because of user input. | US1–US5, US9, S2 |
+| **Input validation** | Every input is checked for type, range and format (e.g. positive amounts, workload 1–100, weekly hours 1–168, `m`/`y` interval, valid item numbers, `y`/`n` confirmations). Invalid input shows an error message and asks again; the program never crashes because of user input. | US1–US5, US9, S2 |
 | **File processing** | The budget is **read** from and **written** to `budget.json`, including handling of missing and corrupted files. The overview is **written** to a dated `.txt` report. | US8, S1 |
 
 ---
@@ -78,46 +78,42 @@ Budget Planner is a single-user application without login. We distinguish two ro
 | Calculation | Formula |
 | --- | --- |
 | Monthly amount of a yearly item | yearly amount ÷ 12 |
-| Yearly amount of a monthly item | monthly amount × 12 |
+| Yearly amount of a Montly item | Monthly amount * 12 |
+| Category subtotal | sum of the monthly amounts of all items in the category |
+| Total expenses | sum of the monthly amounts of all items |
 | Monthly salary from workload (US5) | full-time salary × workload ÷ 100 |
 | Monthly salary from hourly wage (US9) | hourly wage × weekly hours × 4.33 (named constant `WEEKS_PER_MONTH`) |
-| Category share | category monthly subtotal ÷ total monthly expenses × 100 |
-| Remaining budget | monthly income − total monthly expenses |
-| Expenses as % of income | total monthly expenses ÷ monthly income × 100 |
+| Remaining budget | monthly income − total expenses |
+| Expenses as % of income | total expenses ÷ monthly income × 100 |
 
 ### Rounding and display
 
 - All calculations use **unrounded values**. Rounding happens **only when displaying** values.
-- Yearly items keep their yearly amount as entered; monthly items keep their monthly amount. Totals are summed from these unrounded values.
-- **Amounts** are displayed with 2 decimals and an apostrophe as thousands separator, e.g. `CHF 2'507.92`.
-- **Percentages** are displayed with 1 decimal, e.g. `63.8 %`.
+- Yearly items are stored with their yearly amount as entered and converted to a monthly amount only for calculations and display.
+- **Amounts** are displayed in CHF with 2 decimals and an apostrophe as thousands separator, e.g. `2'507.92`.
+- **Percentages** are displayed with 1 decimal, e.g. `89.6 %`.
 
 ### Reference example
 
 All calculation examples in the acceptance criteria use this budget:
 
-| Item | Amount | Interval | Category |
-| --- | --- | --- | --- |
-| Rent | 1450.00 | monthly | Housing |
-| Utilities | 150.00 | monthly | Housing |
-| Health insurance | 380.00 | monthly | Insurance |
-| Household insurance | 240.00 | yearly | Insurance |
-| Groceries | 400.00 | monthly | Food |
-| Public transport pass | 80.00 | monthly | Transport |
-| Serafe | 335.00 | yearly | Fees |
+| Category / Item | Monthly | Yearly |
+| --- | ---: | ---: |
+| **Housing** | **1'600.00** | **19'200.00** |
+| Rent | 1'450.00 | 17'400.00 |
+| Utilities | 150.00 | 1'800.00 |
+| **Food** | **400.00** | **4'800.00** |
+| Groceries | 400.00 | 4'800.00 |
+| **Insurance** | **400.00** | **4'800.00** |
+| Health insurance | 380.00 | 4'560.00 |
+| Household insurance | 20.00 | 240.00 |
+| **Transport** | **80.00** | **960.00** |
+| Public transport pass | 80.00 | 960.00 |
+| **Fees** | **27.92** | **335.00** |
+| Serafe | 27.92 | 335.00 |
+| **Total** | **2'507.92** | **30'095.00** |
 
-Expected results:
-
-| Category | Monthly | Yearly | Share |
-| --- | --- | --- | --- |
-| Housing | 1'600.00 | 19'200.00 | 63.8 % |
-| Insurance | 400.00 | 4'800.00 | 15.9 % |
-| Food | 400.00 | 4'800.00 | 15.9 % |
-| Transport | 80.00 | 960.00 | 3.2 % |
-| Fees | 27.92 | 335.00 | 1.1 % |
-| **Total** | **2'507.92** | **30'095.00** | |
-
-Note: the monthly total is 30'095.00 ÷ 12 = 2'507.9166… → displayed as 2'507.92. It is **not** calculated as 2'507.92 × 12 = 30'095.04.
+Note: Serafe is 335.00 ÷ 12 = 27.9166… per month. Totals are calculated from unrounded values and only rounded for display. The monthly total is therefore 30'095.00 ÷ 12 = 2'507.9166… → 2'507.92, not 2'507.92 × 12 = 30'095.04 for the yearly total.
 
 ---
 
@@ -129,7 +125,7 @@ The **agreed stories US1–US9** are the scope we commit to. Each team member is
 As a Budget Owner, I want to add budget items with name, amount, category and interval, one after another, so that I can record my expenses quickly.
 
 **Acceptance criteria**
-1. **Given** the main menu, **when** I choose "Add items" and enter `Rent`, `1450`, `Housing` and `m`, **then** the item is saved as Rent, CHF 1'450.00, Housing, monthly, and the message "Rent added." is shown.
+1. **Given** the main menu, **when** I choose "Add items" and enter `Rent`, `1450`, `Housing` and `m`, **then** the item is saved as Rent, 1450.00, Housing, monthly, and the message "Rent added." is shown.
 2. **Given** the name prompt, **when** I enter nothing or only spaces, **then** "Name must not be empty." is shown and I am asked again.
 3. **Given** the amount prompt, **when** I enter `abc`, `0` or `-50`, **then** "Please enter a positive number." is shown and I am asked again.
 4. **Given** the amount prompt, **when** I enter `1450,50`, **then** "Please use a dot as decimal separator (e.g. 1450.50)." is shown and I am asked again.
@@ -163,7 +159,7 @@ As a Budget Owner, I want to delete an item, so that my budget stays up to date.
 As a Budget Owner, I want to optionally enter my net monthly salary, so that I can see how much money I have left.
 
 **Acceptance criteria**
-1. **Given** no income is recorded, **when** I choose "Set income" → "Monthly salary" and enter `3500`, **then** the income is saved as CHF 3'500.00 and shown in the main menu header.
+1. **Given** no income is recorded, **when** I choose "Set income" → "Monthly salary" and enter `3500`, **then** the income is saved as 3500.00 and shown in the main menu header.
 2. **Given** the salary prompt, **when** I enter `abc`, `0` or `-100`, **then** "Please enter a positive number." is shown and I am asked again.
 3. **Given** an income is recorded, **when** I enter a new income in any mode (US4, US5 or US9), **then** the new value replaces the old one (it is not added to it).
 4. **Given** an income is recorded, **when** I choose "Remove income" and confirm with `y`, **then** no income is recorded anymore and the overview no longer shows a remaining budget; **when** I answer `n`, **then** the income stays unchanged.
@@ -179,24 +175,39 @@ As a Budget Owner working part-time, I want to enter my full-time (100%) salary 
 5. **Given** the full-time salary prompt, **when** I enter an invalid value, **then** the same validation as in US4 applies.
 
 ### US6 – Budget overview by category
-As a Budget Owner, I want to see my expenses grouped by category, per month and per year, so that I know where my money goes.
+As a Budget Owner, I want to see my monthly expenses grouped by category, so that I know where my money goes.
 
 **Acceptance criteria**
-1. **Given** the reference budget, **when** I choose "Show overview", **then** the items are grouped by category, each item is shown with its monthly and yearly amount, and each category shows its subtotal and share as in the reference example.
-2. **Given** the reference budget, **then** the categories are sorted by monthly subtotal, highest first, and the totals are CHF 2'507.92 per month and CHF 30'095.00 per year.
-3. **Given** a yearly item Serafe of CHF 335.00, **then** it is shown as CHF 27.92 per month and CHF 335.00 per year.
-4. **Given** a monthly item Rent of CHF 1'450.00, **then** it is shown as CHF 1'450.00 per month and CHF 17'400.00 per year.
-5. **Given** a budget with only one category, **then** its share is shown as 100.0 %.
-6. **Given** a budget without items, **when** I choose "Show overview", **then** "No expenses recorded yet. Add items first." is shown instead of a table, and no percentages are calculated.
+1. **Given** the reference budget, **when** I choose "Show overview", **then** the following overview is shown (amounts in CHF per month and year):
+
+| Category / Item | Monthly | Yearly |
+| --- | ---: | ---: |
+| **Housing** | **1'600.00** | **19'200.00** |
+| Rent | 1'450.00 | 17'400.00 |
+| Utilities | 150.00 | 1'800.00 |
+| **Food** | **400.00** | **4'800.00** |
+| Groceries | 400.00 | 4'800.00 |
+| **Insurance** | **400.00** | **4'800.00** |
+| Health insurance | 380.00 | 4'560.00 |
+| Household insurance | 20.00 | 240.00 |
+| **Transport** | **80.00** | **960.00** |
+| Public transport pass | 80.00 | 960.00 |
+| **Fees** | **27.92** | **335.00** |
+| Serafe | 27.92 | 335.00 |
+| **Total** | **2'507.92** | **30'095.00** |
+
+2. **Given** several categories, **then** they are sorted by subtotal, highest first; categories with the same subtotal (Food and Insurance, 400.00 each) are sorted alphabetically.
+3. **Given** several items in one category, **then** they are also listed highest first and if same alphabetically.
+4. **Given** a budget without items, **when** I choose "Show overview", **then** "No expenses recorded yet. Add items first." is shown instead of the overview, and no total is calculated.
 
 ### US7 – Calculate remaining budget
 As a Budget Owner with recorded income, I want to see how much I have left after all expenses, so that I know whether my budget works.
 
 **Acceptance criteria**
-1. **Given** the reference budget and an income of CHF 2'800.00, **when** I open the overview, **then** below the expenses it shows a remaining budget of CHF 292.08 and expenses of 89.6 % of income.
+1. **Given** the reference budget and an income of CHF 2'800.00, **when** I open the overview, **then** below the total it shows a remaining budget of CHF 292.08 and expenses of 89.6 % of income.
 2. **Given** the reference budget and an income of CHF 2'400.00, **then** the remaining budget is CHF −107.92 and the warning "Warning: your expenses exceed your income by CHF 107.92." is shown.
 3. **Given** expenses exactly equal to the income, **then** the remaining budget is CHF 0.00 and the note "No reserve left." is shown instead of a warning.
-4. **Given** an income of CHF 2'800.00 and no items, **then** the remaining budget is CHF 2'800.00 and expenses are 0.0 % of income.
+4. **Given** an income of CHF 2'800.00 and no items, **then** No overview can be shown because of US6 AC4.
 5. **Given** no income is recorded, **then** no remaining budget is calculated and "No income recorded. Set an income to see your remaining budget." is shown.
 
 ### US8 – Export report
@@ -214,8 +225,8 @@ As a Budget Owner paid by the hour, I want to enter my hourly wage and weekly ho
 
 **Acceptance criteria**
 1. **Given** "Set income" → "Hourly wage", **when** I enter an hourly wage of `32.50` and `20` weekly hours, **then** "Monthly salary: CHF 2'814.50" is shown and saved as income.
-2. **Given** the weekly hours prompt, **when** I enter `1`, `60` or `8.5`, **then** the value is accepted.
-3. **Given** the weekly hours prompt, **when** I enter `0`, `61` or `abc`, **then** "Please enter a number between 1 and 60." is shown and I am asked again.
+2. **Given** the weekly hours prompt, **when** I enter `1`, `168` or `8.5`, **then** the value is accepted.
+3. **Given** the weekly hours prompt, **when** I enter `0`, `169` or `abc`, **then** "Please enter a number between 1 and 168." is shown and I am asked again.
 4. **Given** the hourly wage prompt, **when** I enter `abc`, `0`, `-5` or `32,50`, **then** the same validation as for amounts in US1 applies.
 5. **Given** an income based on workload (US5), **when** I enter an hourly-wage income, **then** it replaces the previous income.
 
