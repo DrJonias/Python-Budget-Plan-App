@@ -1,0 +1,14 @@
+# Python generated files
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# User data and generated reports
+budget.json
+budget_report_*.txt
+
+# OS / editor files
+.DS_Store
+.vscode/
