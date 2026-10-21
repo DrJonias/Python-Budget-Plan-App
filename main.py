@@ -1,4 +1,4 @@
-from modules import items, income, input_utils
+from modules import items, income, input_utils, storage
 
 #budget stores alle items and the income
 #items is a list of dictionaries.
@@ -21,13 +21,13 @@ def main(message):
         4) delete position
         5) add or edit income
         6) export as pdf
-        7) save & quit
+        7) save
+        8) exit
         """)
-
 
     match(option):
         case "1":
-            createOverview()
+            print(1)
         case "2":
             items.addItem(budget)
             print(budget)
@@ -44,13 +44,24 @@ def main(message):
         case "6":
             print(6)
         case "7":
-            print(7)
+            storage.saveBudgetToJson(budget)
+            main("""
+                Budget saved
+                What do you want to do?
+                """)
+        case "8":   
+            print("closing")
         case _:
             main("""
             Error - Invalid input
             What do you want to do?
             """)
-               
 
+#start of script
+# budget gets loaded from file
+# !!! TODO !!! check if file exists and is correct. Else some errors can happen     
+budget = storage.loadBudgetFromJson()
+
+#Start the main menu circle
 main("What do you want to do?")
 
