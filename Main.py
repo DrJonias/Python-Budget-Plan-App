@@ -1,5 +1,8 @@
 from modules import items, income, input_utils
 
+#budget stores alle items and the income
+#items is a list of dictionaries.
+#example of an item: {"name": "Rent", "category": "Housing", "value": 1200, "interval": "m"}
 budget = {
     "items": [],
     "income": None,

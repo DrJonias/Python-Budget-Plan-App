@@ -280,9 +280,9 @@ The app is controlled through a numbered main menu that shows the number of item
 
 | Student | User stories | Module |
 | --- | --- | --- |
-| [Name 1] | US1 – Add items, US2 – List and edit items, US3 – Delete an item | `items.py` |
-| [Name 2] | US4 – Monthly salary, US5 – Workload percentage, US9 – Hourly wage | `income.py` |
-| [Name 3] | US6 – Overview by category, US7 – Remaining budget, US8 – Export report | `report.py` |
+| Gaëtan Saucy | US1 – Add items, US2 – List and edit items, US3 – Delete an item | `items.py` |
+| Melvin Orji | US4 – Monthly salary, US5 – Workload percentage, US9 – Hourly wage | `income.py` |
+| Jonas Bachmann | US6 – Overview by category, US7 – Remaining budget, US8 – Export report | `report.py` |
 | Whole team | S1 – Save and load, S2 – Main menu, shared validation helpers | `storage.py`, `main.py`, `input_utils.py` |
 
 The main menu and the validation helpers are needed by everyone and are built first.
