@@ -1,6 +1,6 @@
 from modules import items, income, input_utils, storage
 
-#budget stores alle items and the income
+#budget stores all items and the income
 #items is a list of dictionaries.
 #example of an item: {"name": "Rent", "category": "Housing", "value": 1200, "interval": "m"}
 budget = {
@@ -8,7 +8,7 @@ budget = {
     "income": None,
 }
 
-#The Main function
+#The main menu cylce
 def main(message):
     option = input(f"""
         Welcome to the Budget Plan
@@ -16,9 +16,9 @@ def main(message):
         {message}
 
         1) Overview
-        2) add position
-        3) edit position
-        4) delete position
+        2) add item
+        3) edit item
+        4) delete item
         5) add or edit income
         6) export as pdf
         7) save
@@ -26,32 +26,52 @@ def main(message):
         """)
 
     match(option):
+
+        #show overview
         case "1":
             print(1)
+
+        #add item
         case "2":
             items.addItem(budget)
-            print(budget)
+
+            #restart the main menu cycle
             main("""
             Position added
             What do you want to do?
             """)
+
+        #edit item 
         case "3":
             print(3)
+
+        #delete item
         case "4":
             print(4)
+
+        #add or edit income
         case "5":
             print(5)
+
+        #export as pdf
         case "6":
             print(6)
+
+        #save
         case "7":
             storage.saveBudgetToJson(budget)
             main("""
                 Budget saved
                 What do you want to do?
                 """)
+
+        #exit
         case "8":   
             print("closing")
+
+        #every other input
         case _:
+            #restart main menu cycle
             main("""
             Error - Invalid input
             What do you want to do?
@@ -59,8 +79,7 @@ def main(message):
 
 #start of script
 # budget gets loaded from file
-# !!! TODO !!! check if file exists and is correct. Else some errors can happen     
-budget = storage.loadBudgetFromJson()
+storage.loadBudgetFromJson(budget)
 
 #Start the main menu circle
 main("What do you want to do?")
