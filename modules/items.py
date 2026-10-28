@@ -31,7 +31,34 @@ def editItem(budget):
         if 0 <= item_index < len(budget["items"]):
             current_item = budget["items"][item_index]
             print(f"Editing: {current_item['name']} (Press Enter to keep the current value)")
-           
+
+            name = input(f"New name [{current_item['name']}]: ") or current_item['name']
+            category = input(f"New category [{current_item['category']}]: ") or current_item['category']
+            
+            val_input = input(f"New value [{current_item['value']}]: ")
+            value = float(val_input) if val_input else current_item['value']
+
+            while True:
+                interval_input = input(f"New interval [m/y] [{current_item['interval']}]: ").strip().lower()
+                if not interval_input:
+                    interval = current_item['interval']
+                    break
+                elif interval_input in ["m", "y"]:
+                    interval = interval_input
+                    break
+                print("Invalid input. Please enter 'm' or 'y'.")
+
+            # Update the item
+            budget["items"][item_index] = {
+                "name": name,
+                "category": category,
+                "value": value,
+                "interval": interval
+            }
+            print("Item updated successfully!")
         else:
-            print("Invalid item number.")
-            return
+            print("Error: Invalid item index.")
+            
+    except ValueError:
+        print("Error: Please enter a valid number.")
+        
