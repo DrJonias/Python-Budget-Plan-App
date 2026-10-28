@@ -51,7 +51,8 @@ def main(message):
 
         #add or edit income
         case "5":
-            print(5)
+            income.addIncome(budget)
+            
 
         #export as pdf
         case "6":
