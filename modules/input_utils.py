@@ -7,6 +7,7 @@ def askText():
 #input for all numeric values.
 def askValue():
     print("value")
+    print("test")
 
 #input for all Yes / No questions.
 def askYesNo():
