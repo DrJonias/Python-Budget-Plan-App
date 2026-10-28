@@ -1,8 +1,12 @@
 #the input_utils.py contains all the input validation.
 
 #input for all text inputs.
-def askText():
-    print("text")
+def askText(message):
+   userInput =input(message).strip()
+   if userInput == "":
+        return askText(message)
+   else: 
+       return userInput
 
 #input for all numeric values.
 def askValue(message):
