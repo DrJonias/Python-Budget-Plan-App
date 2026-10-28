@@ -1,4 +1,5 @@
 import json
+import os
 
 #saving the given dict into a json file in the projekt directory.
 def saveBudgetToJson(budget):
@@ -17,8 +18,12 @@ def loadBudgetFromJson(budget):
 
     #if the file does not exist. create the file and write the empty budget template in it.
     except FileNotFoundError:
-        with open("budget.json", "w", encoding="utf-8") as file:
-            json.dump(budget, file)
-    #for every other error print "invalid json file"
+        saveBudgetToJson(budget)
+    #for every other error print "invalid json file".
     except Exception:
-        print("invalid json file")
+
+        #rename the invalid budget json.
+        os.replace("budget.json", "invalid_budget.json")
+
+        #create a new file with the empty budget template.
+        saveBudgetToJson(budget)

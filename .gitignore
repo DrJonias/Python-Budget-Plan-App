@@ -7,6 +7,7 @@ __pycache__/
 
 # User data and generated reports
 budget.json
+invalid_budget.json
 budget_report_*.txt
 
 # OS / editor files
