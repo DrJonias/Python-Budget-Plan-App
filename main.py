@@ -30,7 +30,7 @@ def main(message):
         #show overview
         case "1":
             print(1)
-
+            
         #add item
         case "2":
             items.addItem(budget)
