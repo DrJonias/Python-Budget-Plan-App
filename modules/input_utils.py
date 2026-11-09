@@ -21,7 +21,7 @@ def askValue(message):
 
 #input for all Yes / No questions.
 def askYesNo():
-    print("yes / No")
+    print("yes / no")
 
 #input for all Month / Year question.
 def askMonthYear():
