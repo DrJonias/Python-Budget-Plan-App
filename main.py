@@ -1,4 +1,4 @@
-from modules import items, income, input_utils, storage
+from modules import items, income, input_utils, storage, report
 
 #budget stores all items and the income
 #items is a list of dictionaries.
@@ -29,8 +29,10 @@ def main(message):
 
         #show overview
         case "1":
-            print(1)
-            
+            report.showOverview(budget)
+            input("press any button to return to main menu")
+            main("What do you want to do?")
+
         #add item
         case "2":
             items.addItem(budget)
