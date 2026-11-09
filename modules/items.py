@@ -5,11 +5,7 @@ def addItem(budget):
     name = input_utils.askText("what is the item called? ")
     category = input_utils.askText("what category do you want to add to? ")
     value = input_utils.askValue("what is the value of the item? ")
-
-    while True:
-        interval = input_utils.askMonthYear("Interval [m]onthly / [y]early: ").strip().lower()
-        if interval in ["m", "y"]:
-            break
+    interval = input_utils.askMonthYear()
 
     item = {"name": name, "category": category, "value": value, "interval": interval}
     budget["items"].append(item)
