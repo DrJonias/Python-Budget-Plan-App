@@ -29,13 +29,8 @@ def main(message):
 
         #show overview
         case "1":
-<<<<<<< HEAD
             report.showOverview(budget)
 
-=======
-            print(1)
-            
->>>>>>> 5a0d8ffe4073bd98fee5d53a935eded0b5d97c22
         #add item
         case "2":
             items.addItem(budget)
