@@ -30,6 +30,8 @@ def main(message):
         #show overview
         case "1":
             report.showOverview(budget)
+            input("press any button to return to main menu")
+            main("What do you want to do?")
 
         #add item
         case "2":

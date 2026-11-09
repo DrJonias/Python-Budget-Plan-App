@@ -13,7 +13,7 @@ def calculateRemainingBudget(budget: dict):
 
 
 def showOverview(budget):
-    print(f"{'Name':<15} {'Category':<12} {'Value':>10} {'Interval':<8}")
+    print(f"{'Name':<15} {'Category':<12} {'Value':>10} {'Interval':>8}")
     print("-" * 48)
 
     for item in budget["items"]:
