@@ -43,7 +43,13 @@ def main(message):
 
         #edit item 
         case "3":
-            print(3)
+            items.editItem(budget)
+
+            #restart the main menu cycle
+            main("""
+            Position edited
+            What do you want to do?
+            """)
 
         #delete item
         case "4":
