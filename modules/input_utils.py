@@ -22,7 +22,12 @@ def askValue(message):
 #input for all Yes / No questions.
 def askYesNo():
     print("yes / no")
+    
 
 #input for all Month / Year question.
 def askMonthYear():
-    print("M/Y")
+    while True:
+            interval = input("Interval [m]onthly / [y]early: ").strip().lower()
+            if interval in ["m", "y"]:
+                return interval
+            else: print("Invalid input. Please enter 'm' for monthly or 'y' for yearly.")

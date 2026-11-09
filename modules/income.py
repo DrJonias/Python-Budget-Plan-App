@@ -15,17 +15,18 @@ def addIncome(budget):
 
         
     
-while True:
-    awnser = input ("Do you want to edit your existing Salary? y/n:")
-    if awnser.lower() == "y":
+    while True:
+        awnser = input ("Do you want to edit your existing Salary? y/n:")
+        if awnser.lower() == "y":
 
-         newSalary = input_utils.askValue("Please enter your new salary:")
-         break
-    
-    elif awnser.lower() == "n":
-         break
+            newSalary = input_utils.askValue("Please enter your new full-time salary:")
+            break
+        
+        elif awnser.lower() == "n":
+            break
 
-    else :print("Error: Please enter y or n")
+        else :
+            print("Error: Please enter y or n")
 
 
 #Workload Input 
