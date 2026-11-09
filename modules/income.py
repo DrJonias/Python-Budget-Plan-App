@@ -29,23 +29,23 @@ def addIncome(budget):
             print("Error: Please enter y or n")
 
 
-#Workload Input 
+    #Workload Input 
 
-while True: 
-#WORKLOAD Restrict str (error, couldnt convert to float)
-    workLoad = float(input("What's your workload percentage? (For example: 80)"))
-    
-    if workLoad < 0 or workLoad > 100:
-        print("Error: Please enter a number between 0 and 100.")
-    
-    elif workLoad ==str:
-        print("Error: Please enter a number between 0 and 100.")
+    while True: 
+    #WORKLOAD Restrict str (error, couldnt convert to float)
+        workLoad = float(input("What's your workload percentage? (For example: 80)"))
+        
+        if workLoad < 0 or workLoad > 100:
+            print("Error: Please enter a number between 0 and 100.")
+        
+        elif workLoad ==str:
+            print("Error: Please enter a number between 0 and 100.")
 
-    
-    elif workLoad > 0 or workLoad <100:
-        break
-    
-#Calculation salary to workload to get 100% Salary
+        
+        elif workLoad > 0 or workLoad <100:
+            break
+        
+    #Calculation salary to workload to get 100% Salary
 
 
 def CalcWorkload():
