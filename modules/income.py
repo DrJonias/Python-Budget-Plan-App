@@ -7,14 +7,15 @@ from modules import input_utils
 def addIncome(budget):
 
     if budget["income"] is None:
-            userSalary = input("Please enter your monthly salary: ")
+            userSalary = input_utils.askValue("Please enter your monthly salary: ")
+            budget["income"] = userSalary
+            
+    else:   
+        userSalary= budget["income"]
 
-            return userSalary
-    else:
-            return budget["income"]
+#Salary edit
 
-        
-    
+    newSalary = budget["income"]
     while True:
         awnser = input ("Do you want to edit your existing Salary? y/n:")
         if awnser.lower() == "y":
@@ -26,11 +27,8 @@ def addIncome(budget):
             break
 
         else :
-            print("Error: Please enter y or n")
-
-
-    #Workload Input 
-
+            print("Error: Please enter y or n") 
+#Workload Input 
     while True: 
     #WORKLOAD Restrict str (error, couldnt convert to float)
         workLoad = float(input("What's your workload percentage? (For example: 80)"))
@@ -44,11 +42,13 @@ def addIncome(budget):
         
         elif workLoad > 0 or workLoad <100:
             break
-        
+    
+    budget["income"] = newSalary
+    return budget, newSalary, workLoad
     #Calculation salary to workload to get 100% Salary
 
 
-def CalcWorkload():
+def CalcWorkload(workLoad,newSalary):
 
     workdLoad100 = workLoad / 100
     salary100 = newSalary / workdLoad100

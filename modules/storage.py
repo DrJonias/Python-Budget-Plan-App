@@ -27,3 +27,5 @@ def loadBudgetFromJson(budget):
 
         #create a new file with the empty budget template.
         saveBudgetToJson(budget)
+        
+    return budget
