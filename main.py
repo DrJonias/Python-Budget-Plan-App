@@ -59,21 +59,13 @@ def main(message):
 
         #add or edit income
         case "5":
-            #Empty budget dictionary
-            budget = {
-    "income": None
-}
-           #Load existing budget
-            budget = storage.loadBudgetFromJson(budget)
+            income.addIncome(budget)
+            main("""
+                Income updated
+                What do you want to do?
+                """)
 
-            #Add or edit income
-            budget, newSalary, workLoad = income.addIncome(budget)
-
-            #Calculate workload
-            income.CalcWorkload(workLoad, newSalary)
-
-            #Save updated budget
-            storage.saveBudgetToJson(budget)
+         
             
 
         #export as pdf

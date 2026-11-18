@@ -1,10 +1,54 @@
 
 from modules import input_utils
 
-#Check if salary exist / demand new
-
-#ADDINCOME restrcit input
+#ask if hourly wage or fixed income
 def addIncome(budget):
+    answer = input_utils.askWM("is your income hourly (w) or monthly (m) calculated ")
+      
+    if answer.lower() == "w":
+        addWage(budget)
+      
+    elif answer.lower() == "m":
+        addMontly(budget)
+    else:
+        print("something went wrong, nothing happend")
+      
+#code for weekly wage
+    
+def addWage(budget):
+    if budget["income"] is None:
+
+        userSalary = input_utils.askValue("Please enter your hourly wage: ")
+        budget["income"] = userSalary
+        
+
+    else:   
+        userSalary = budget["income"]
+
+#demand hours per week
+    while True:
+        workLoad = float(input("How many hours do you work per week? (For example: 50 )"))
+                
+        if workLoad < 0 or workLoad > 168:
+            print("Error: Please enter a number between 0 and 168.")
+                
+        elif workLoad ==str:
+            print("Error: Please enter a number between 0 and 168.")
+        
+                
+        elif workLoad > 0 or workLoad <= 168:
+            break
+            
+    budget["income"] = userSalary
+
+
+
+
+
+
+#Check if salary exist / demand new
+#ADDINCOME restrcit input
+def addMontly(budget):
 
     if budget["income"] is None:
             userSalary = input_utils.askValue("Please enter your monthly salary: ")
@@ -22,6 +66,7 @@ def addIncome(budget):
 
             newSalary = input_utils.askValue("Please enter your new full-time salary:")
             break
+
         
         elif awnser.lower() == "n":
             break
@@ -45,9 +90,9 @@ def addIncome(budget):
     
     budget["income"] = newSalary
     return budget, newSalary, workLoad
+    
+    
     #Calculation salary to workload to get 100% Salary
-
-
 def CalcWorkload(workLoad,newSalary):
 
     workdLoad100 = workLoad / 100
